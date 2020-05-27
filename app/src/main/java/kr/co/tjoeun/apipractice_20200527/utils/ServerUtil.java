@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -25,7 +26,7 @@ public class ServerUtil {
         void onResponse(JSONObject json);
     }
 
-    public static void postRequestLogin(Context context, String email, String pw, JsonResponseHandler handler) {
+    public static void postRequestLogin(Context context, String email, String pw, final JsonResponseHandler handler) {
 
 //        안드로이드 앱이 클라이언트로써의 역할을 하도록 도와주는 객체.
         OkHttpClient client = new OkHttpClient();
@@ -60,6 +61,22 @@ public class ServerUtil {
                 String body = response.body().string();
 
                 Log.d("서버연결성공", body);
+
+//                String body 를 JSONObject 로 변환.
+
+                try {
+                    JSONObject jsonObject = new JSONObject(body);
+
+//                    변환된 JSON을 액티비티에 전달 + 처리 실행.
+                    if (handler != null) {
+                        handler.onResponse(jsonObject);
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
 
             }
         });
