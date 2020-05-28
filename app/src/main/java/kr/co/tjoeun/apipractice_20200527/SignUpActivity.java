@@ -6,8 +6,13 @@ import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.View;
+
+import org.json.JSONObject;
 
 import kr.co.tjoeun.apipractice_20200527.databinding.ActivitySignUpBinding;
+import kr.co.tjoeun.apipractice_20200527.utils.ServerUtil;
 
 public class SignUpActivity extends BaseActivity {
 
@@ -35,6 +40,24 @@ public class SignUpActivity extends BaseActivity {
 
     @Override
     public void setupEvents() {
+
+        binding.idCheckBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String inputEmail = binding.emailEdt.getText().toString();
+
+                ServerUtil.getRequestDuplicatedCheck(mContext, inputEmail, "EMAIL", new ServerUtil.JsonResponseHandler() {
+                    @Override
+                    public void onResponse(JSONObject json) {
+
+                        Log.d("중복응답확인", json.toString());
+
+                    }
+                });
+            }
+        });
+
 
         binding.pwEdt.addTextChangedListener(new TextWatcher() {
             @Override
@@ -87,11 +110,9 @@ public class SignUpActivity extends BaseActivity {
 
         if (pw.length() == 0) {
             binding.pwCheckResultTxt.setText("비밀번호를 입력해주세요.");
-        }
-        else if (pw.length() < 8) {
+        } else if (pw.length() < 8) {
             binding.pwCheckResultTxt.setText("비밀번호가 너무 짧습니다.");
-        }
-        else {
+        } else {
             binding.pwCheckResultTxt.setText("사용해도 좋은 비밀번호 입니다.");
             isPwOk = true;
         }
@@ -101,12 +122,10 @@ public class SignUpActivity extends BaseActivity {
 
         if (pwRepeat.length() == 0) {
             binding.pwRepeatCheckResultTxt.setText("비밀번호 확인을 입력해주세요.");
-        }
-        else if (pwRepeat.equals(pw)) {
+        } else if (pwRepeat.equals(pw)) {
             binding.pwRepeatCheckResultTxt.setText("비밀번호 재입력이 확인 되었습니다.");
             isPwRepeatOk = true;
-        }
-        else {
+        } else {
             binding.pwRepeatCheckResultTxt.setText("비밀번호가 서로 다릅니다.");
         }
 
@@ -114,7 +133,7 @@ public class SignUpActivity extends BaseActivity {
 
     }
 
-//    아이디중복 / 비번확인 / 닉네임 중복이 모두 통과여야, 회원가입버튼 활성화
+    //    아이디중복 / 비번확인 / 닉네임 중복이 모두 통과여야, 회원가입버튼 활성화
 //    하나라도 틀리면 회원가입버튼 비활성화
     void checkSignUpEnable() {
 
