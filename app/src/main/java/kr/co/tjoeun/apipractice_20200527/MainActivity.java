@@ -17,8 +17,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import kr.co.tjoeun.apipractice_20200527.databinding.ActivityMainBinding;
 import kr.co.tjoeun.apipractice_20200527.datas.Topic;
+import kr.co.tjoeun.apipractice_20200527.datas.TopicReply;
 import kr.co.tjoeun.apipractice_20200527.datas.User;
 import kr.co.tjoeun.apipractice_20200527.utils.ContextUtil;
 import kr.co.tjoeun.apipractice_20200527.utils.ServerUtil;
@@ -26,6 +30,8 @@ import kr.co.tjoeun.apipractice_20200527.utils.ServerUtil;
 public class MainActivity extends BaseActivity {
 
     ActivityMainBinding binding;
+
+    List<TopicReply> replyList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +109,9 @@ public class MainActivity extends BaseActivity {
                             JSONObject reply = replies.getJSONObject(i);
 
                             Log.d("댓글내용", reply.getString("content"));
+
+                            replyList.add(TopicReply.getTopicReplyFromJson(reply));
+
                         }
 
 
@@ -129,4 +138,5 @@ public class MainActivity extends BaseActivity {
         });
 
     }
+
 }
