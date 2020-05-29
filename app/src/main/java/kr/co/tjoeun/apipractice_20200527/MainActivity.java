@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -93,6 +94,16 @@ public class MainActivity extends BaseActivity {
                         JSONObject topic = data.getJSONObject("topic");
 
                         final Topic thisWeekTopic = Topic.getTopicFromJson(topic);
+
+//                        댓글목록도 파싱하자
+
+                        JSONArray replies = data.getJSONArray("replies");
+
+                        for (int i=0; i < replies.length() ; i++) {
+                            JSONObject reply = replies.getJSONObject(i);
+
+                            Log.d("댓글내용", reply.getString("content"));
+                        }
 
 
                         runOnUiThread(new Runnable() {
