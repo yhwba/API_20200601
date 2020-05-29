@@ -1,7 +1,6 @@
 package kr.co.tjoeun.apipractice_20200527;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.content.DialogInterface;
@@ -20,6 +19,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import kr.co.tjoeun.apipractice_20200527.adapters.TopicReplyAdapter;
 import kr.co.tjoeun.apipractice_20200527.databinding.ActivityMainBinding;
 import kr.co.tjoeun.apipractice_20200527.datas.Topic;
 import kr.co.tjoeun.apipractice_20200527.datas.TopicReply;
@@ -32,6 +32,7 @@ public class MainActivity extends BaseActivity {
     ActivityMainBinding binding;
 
     List<TopicReply> replyList = new ArrayList<>();
+    TopicReplyAdapter tra;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,6 +137,9 @@ public class MainActivity extends BaseActivity {
 
             }
         });
+
+        tra = new TopicReplyAdapter(mContext, R.layout.topic_reply_list_item, replyList);
+        binding.replyListView.setAdapter(tra);
 
     }
 
