@@ -34,6 +34,8 @@ public class MainActivity extends BaseActivity {
     List<TopicReply> replyList = new ArrayList<>();
     TopicReplyAdapter tra;
 
+    Topic thisWeekTopic;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +46,17 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void setupEvents() {
+
+        binding.postReplyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent myIntent = new Intent(mContext, EditReplyActivity.class);
+                myIntent.putExtra("topic", thisWeekTopic); // 댓글 달 주제를 넘겨주자.
+                startActivity(myIntent);
+
+            }
+        });
 
         binding.logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +113,7 @@ public class MainActivity extends BaseActivity {
 
                         JSONObject topic = data.getJSONObject("topic");
 
-                        final Topic thisWeekTopic = Topic.getTopicFromJson(topic);
+                        thisWeekTopic = Topic.getTopicFromJson(topic);
 
 //                        댓글목록도 파싱하자
 
