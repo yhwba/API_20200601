@@ -6,10 +6,13 @@ import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.bumptech.glide.Glide;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import kr.co.tjoeun.apipractice_20200527.databinding.ActivityMainBinding;
+import kr.co.tjoeun.apipractice_20200527.datas.Topic;
 import kr.co.tjoeun.apipractice_20200527.datas.User;
 import kr.co.tjoeun.apipractice_20200527.utils.ServerUtil;
 
@@ -49,12 +52,18 @@ public class MainActivity extends BaseActivity {
 
                         final User me = User.getUserFromJson(user);
 
+                        JSONObject topic = data.getJSONObject("topic");
+
+                        final Topic thisWeekTopic = Topic.getTopicFromJson(topic);
+
 
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 binding.nickNameTxt.setText(me.getNickName());
                                 binding.emailTxt.setText(me.getEmail());
+
+                                Glide.with(mContext).load(thisWeekTopic.getImageUrl()).into(binding.topicImg);
                             }
                         });
 
