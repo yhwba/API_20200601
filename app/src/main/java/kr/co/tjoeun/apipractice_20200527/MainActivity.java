@@ -64,6 +64,7 @@ public class MainActivity extends BaseActivity {
                                 binding.emailTxt.setText(me.getEmail());
 
                                 Glide.with(mContext).load(thisWeekTopic.getImageUrl()).into(binding.topicImg);
+                                binding.topicTitleTxt.setText(thisWeekTopic.getTitle());
                             }
                         });
 
