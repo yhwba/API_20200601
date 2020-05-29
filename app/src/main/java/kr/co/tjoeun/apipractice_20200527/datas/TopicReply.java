@@ -8,20 +8,30 @@ public class TopicReply {
     private int id;
     private String content;
     private String side;
+    private User writer;
 
     public static TopicReply getTopicReplyFromJson(JSONObject jsonObject) {
-        TopicReply tp = new TopicReply();
+        TopicReply tr = new TopicReply();
 
         try {
-            tp.id = jsonObject.getInt("id");
-            tp.content = jsonObject.getString("content");
-            tp.side = jsonObject.getString("side");
+            tr.id = jsonObject.getInt("id");
+            tr.content = jsonObject.getString("content");
+            tr.side = jsonObject.getString("side");
+
+
+//            댓글 json 안에 있는 user Json 추출
+            JSONObject user = jsonObject.getJSONObject("user");
+
+//            이 user Json으로 User클래스로 변환하는 기능 활용
+//            활용해서 만든 User객체를 => 댓글의 작성자로 연결.
+            tr.writer = User.getUserFromJson(user);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
 
-        return tp;
+        return tr;
     }
 
     public TopicReply() {
@@ -57,4 +67,13 @@ public class TopicReply {
     public void setSide(String side) {
         this.side = side;
     }
+
+    public User getWriter() {
+        return writer;
+    }
+
+    public void setWriter(User writer) {
+        this.writer = writer;
+    }
+
 }
