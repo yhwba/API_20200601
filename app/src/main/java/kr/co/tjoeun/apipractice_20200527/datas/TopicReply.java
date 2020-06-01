@@ -92,4 +92,8 @@ public class TopicReply {
         this.writer = writer;
     }
 
+
+    public Calendar getCreatedAt() {
+        return createdAt;
+    }
 }
