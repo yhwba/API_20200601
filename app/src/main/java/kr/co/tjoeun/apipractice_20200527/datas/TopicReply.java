@@ -46,8 +46,8 @@ public class TopicReply {
 //            시차 구하는 방법 검색  = > Timezone
 
             TimeZone myPhoneTimeZone = tr.createdAt.getTimeZone();
-//             해당 Timezone의 실제 시차값
-            int gmtOffset = myPhoneTimeZone.getRawOffset(); //표준시간이랑 계산해서
+//             해당 Timezone의 실제 시차값=> 밀리세컨드를 시간으로 변경
+            int gmtOffset = myPhoneTimeZone.getRawOffset()/60/60/1000;
 //              현재 구해낸 시간에 더해준다
             tr.createdAt.add(Calendar.HOUR_OF_DAY,gmtOffset);
 
