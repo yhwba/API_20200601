@@ -93,7 +93,8 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    public void setValues() {
+    protected void onResume() {
+        super.onResume();
 
         ServerUtil.getRequestMainInfo(mContext, new ServerUtil.JsonResponseHandler() {
             @Override
@@ -105,6 +106,10 @@ public class MainActivity extends BaseActivity {
                     int code = json.getInt("code");
 
                     if (code == 200) {
+
+//                        댓글목록이 중복되지 않도록 , 기존의 댓글 내용을 다 날려버린다.
+                        replyList.clear();
+
                         JSONObject data = json.getJSONObject("data");
 
                         JSONObject user = data.getJSONObject("user");
@@ -142,7 +147,6 @@ public class MainActivity extends BaseActivity {
                             }
                         });
 
-
                     }
 
                 } catch (JSONException e) {
@@ -153,8 +157,15 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+
+    }
+
+    @Override
+    public void setValues() {
         tra = new TopicReplyAdapter(mContext, R.layout.topic_reply_list_item, replyList);
         binding.replyListView.setAdapter(tra);
+
+
 
     }
 
