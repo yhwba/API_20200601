@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 public class TopicReply {
 
@@ -36,9 +37,20 @@ public class TopicReply {
             String createdAtStr =jsonObject.getString("created_at");
 
 //            만들어져있는 createdAt캘린더에 => 년/ 월/ 일/ 시 등 데이터 세팅 =>setTime을 이용
+//            내 핸드폰의 시간과  UTC시간의 격차가 얼마인지 구해서 더해줘야함
             SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
             tr.createdAt.setTime(sdf.parse(createdAtStr));
+
+//            시차 :9시간 => 작성시간 +9
+//            시차 구하는 방법 검색  = > Timezone
+
+            TimeZone myPhoneTimeZone = tr.createdAt.getTimeZone();
+//             해당 Timezone의 실제 시차값
+            int gmtOffset = myPhoneTimeZone.getRawOffset(); //표준시간이랑 계산해서
+//              현재 구해낸 시간에 더해준다
+            tr.createdAt.add(Calendar.HOUR_OF_DAY,gmtOffset);
+
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -111,16 +123,17 @@ public class TopicReply {
 
         }
         else if ( diff < 1 * 60 * 60 * 1000){
-//            5분전 : 4.0분 ~4.999분 => diff /1000 /60 => ?분
+//            한시간 이내만 표기 : 5분전 : 4.0분 ~4.999분 => diff /1000 /60 => ?분
             long minute = diff / 1000 /60;
             return String.format("%d분전",minute);
         }
         else  if(diff < 1 * 24 * 60 * 60 * 1000) {
+//            => ~ 시간전 ( 1시간~24시 이전까지 표기)
             long hour = diff /1000 / 60 / 60 ;
             return String.format("%d시간",hour);
         }
         else {
-//            하루가 넘어가면  그 날짜만 출력=>2020년 06월 01일
+//            하루가 넘어가면  그 날짜만 출력 => 2020년 06월 01일
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
             return sdf.format(this.getCreatedAt().getTime());
         }
