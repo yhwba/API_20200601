@@ -61,12 +61,16 @@ public class TopicReplyAdapter extends ArrayAdapter<TopicReply> {
             sideTxt.setBackgroundResource(R.drawable.blue_border_box);
         }
 
-//        언제 댓글을 남겻는지 표시
-//         댓글 남긴 시간 파싱~=> M월 d일 H시 m분
+////        언제 댓글을 남겻는지 표시
+////         댓글 남긴 시간 파싱~=> M월 d일 H시 m분
+//
+//        SimpleDateFormat sdf = new SimpleDateFormat("M월 d일 a h시 m분");
+//        createdAtTxt.setText(sdf.format(data.getCreatedAt().getTime()));
+////         => 현재 영국시간으로 나옴
 
-        SimpleDateFormat sdf = new SimpleDateFormat("M월 d일 a h시 m분");
-        createdAtTxt.setText(sdf.format(data.getCreatedAt().getTime()));
 
+        //        언제 댓글을 남겻는지 표시 =>의견에 있는 기능활용 : ~ 분전으로
+         createdAtTxt.setText((data.getFormatedTimeAgo()));
 
 
         return row;
