@@ -156,7 +156,7 @@ public class ServerUtil {
 
         Request request = new Request.Builder()
                 .url(completeUrl)
-                .header("X-Http_Token",ContextUtil.getLoginUserToken(context))
+                .header("X-Http-Token",ContextUtil.getLoginUserToken(context))
                 .get()
                 .build();
 

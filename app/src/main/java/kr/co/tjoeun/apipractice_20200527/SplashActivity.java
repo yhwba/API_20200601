@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import kr.co.tjoeun.apipractice_20200527.utils.ContextUtil;
 
@@ -31,9 +34,17 @@ public class SplashActivity extends BaseActivity {
 
 //        이 행동을 2초 후에 실행
 
+
+
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+
+                Log.d("디바이스토큰", FirebaseInstanceId.getInstance().getToken());
+
+
+
                 if (!ContextUtil.getLoginUserToken(mContext).equals("") && ContextUtil.isAutoLogin(mContext)) {
 
                     Intent myIntent = new Intent(mContext, MainActivity.class);

@@ -39,11 +39,11 @@ public class UserAdapter extends ArrayAdapter<User> {
         View row = convertView;
 
         if (row == null) {
-            row = inf.inflate(R.layout.topic_reply_list_item, null);
+            row = inf.inflate(R.layout.user_list_item, null);
         }
 
-        TextView nickNameTxt = row.findViewById(R.id.nickNameTxt);
-        TextView emailTxt = row.findViewById(R.id.emailTxt);
+        TextView nickNameTxt = row.findViewById(R.id.userNickNameTxt);
+        TextView emailTxt = row.findViewById(R.id.UserEmailTxt);
 
         User data = mList.get(position);
 
